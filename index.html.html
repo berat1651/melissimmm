@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Melis 💖</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial, sans-serif;
+text-align:center;
+color:white;
+overflow-x:hidden;
+background:linear-gradient(-45deg,#ff6a88,#ff99ac,#ff758c,#ff7eb3);
+background-size:400% 400%;
+animation:gradient 12s ease infinite;
+}
+
+@keyframes gradient{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.hidden{display:none;}
+.container{padding:30px;}
+
+h1{
+font-size:3em;
+animation:glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow{
+from{text-shadow:0 0 10px white;}
+to{text-shadow:0 0 30px #fff,0 0 40px #ff4e50;}
+}
+
+button{
+padding:12px 25px;
+margin:10px;
+font-size:1em;
+border:none;
+border-radius:25px;
+background:white;
+color:#ff4e50;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#ff4e50;
+color:white;
+}
+
+input{
+padding:10px;
+border-radius:20px;
+border:none;
+text-align:center;
+}
+
+#typeText{
+font-size:1.3em;
+min-height:60px;
+margin-bottom:20px;
+}
+
+/* GALERİ */
+.gallery-container{
+position:relative;
+max-width:300px;
+margin:20px auto;
+}
+
+.gallery-container img{
+width:100%;
+border-radius:25px;
+border:5px solid white;
+box-shadow:0 0 25px rgba(255,255,255,0.9);
+cursor:pointer;
+transition:transform 0.4s ease;
+}
+
+.gallery-container img:hover{
+transform:scale(1.05);
+}
+
+.gallery-text{
+position:absolute;
+bottom:10px;
+left:0;
+right:0;
+font-weight:bold;
+text-shadow:0 0 10px black;
+}
+
+/* MODAL */
+.modal{
+display:none;
+position:fixed;
+z-index:999;
+padding-top:60px;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background-color:rgba(0,0,0,0.9);
+}
+
+.modal-content{
+margin:auto;
+display:block;
+max-width:80%;
+border-radius:20px;
+}
+
+.close{
+position:absolute;
+top:20px;
+right:40px;
+color:white;
+font-size:40px;
+cursor:pointer;
+}
+
+/* KALPLER */
+.heart{
+position:fixed;
+top:-10px;
+color:white;
+animation:fall 5s linear forwards;
+}
+
+@keyframes fall{
+to{transform:translateY(100vh);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ŞİFRE -->
+<div id="login" class="container">
+<h1>Bu site kimin için? 💌</h1>
+<input type="password" id="password" placeholder="Şifreyi gir">
+<br><br>
+<button onclick="checkPassword()">Giriş Yap</button>
+</div>
+
+<!-- ANA -->
+<div id="main" class="hidden container">
+<h1>Hoş Geldin Melis 💖</h1>
+
+<div id="typeText"></div>
+
+<button onclick="reason()">Seni Neden Seviyorum? 💘</button>
+<button onclick="bigSurprise()">Büyük Sürpriz 🎁</button>
+
+<h2>Biz 💑</h2>
+
+<div class="gallery-container">
+<img id="slider" src="foto1.jpg" onclick="openModal(this.src)">
+<div class="gallery-text">Biz 💑</div>
+</div>
+
+</div>
+
+<!-- MODAL -->
+<div id="myModal" class="modal">
+<span class="close" onclick="closeModal()">&times;</span>
+<img class="modal-content" id="imgModal">
+</div>
+
+<!-- MÜZİK -->
+<audio autoplay loop>
+<source src="muzik.mp3" type="audio/mp3">
+</audio>
+
+<script>
+const correctPassword="melis";
+
+function checkPassword(){
+const pass=document.getElementById("password").value;
+if(pass===correctPassword){
+document.getElementById("login").style.display="none";
+document.getElementById("main").classList.remove("hidden");
+typeWriter();
+}else{
+alert("Yanlış şifre 💔");
+}
+}
+
+const message="Hayatıma girdiğinden beri her şey daha anlamlı. Gülüşün dünyamı aydınlatıyor Melis. İyi ki varsın 💖";
+let i=0;
+
+function typeWriter(){
+if(i<message.length){
+document.getElementById("typeText").innerHTML+=message.charAt(i);
+i++;
+setTimeout(typeWriter,40);
+}
+}
+
+const reasons=[
+"Çünkü gülüşün dünyadaki en güzel şey.",
+"Çünkü yanındayken huzur buluyorum.",
+"Çünkü kalbin tertemiz.",
+"Çünkü bana kendimi özel hissettiriyorsun.",
+"Çünkü sen Melis’sin ve bu yeterli 💖"
+];
+
+function reason(){
+const random=reasons[Math.floor(Math.random()*reasons.length)];
+alert(random);
+}
+
+function bigSurprise(){
+alert("Melis... Seni her şeyden çok seviyorum 💘 Sonsuza kadar seninleyim.");
+}
+
+let images=["foto1.jpg","foto2.jpg","foto3.jpg"];
+let index=0;
+
+setInterval(function(){
+index=(index+1)%images.length;
+document.getElementById("slider").src=images[index];
+},3000);
+
+function openModal(src){
+document.getElementById("myModal").style.display="block";
+document.getElementById("imgModal").src=src;
+}
+
+function closeModal(){
+document.getElementById("myModal").style.display="none";
+}
+
+function createHeart(){
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤";
+heart.style.left=Math.random()*window.innerWidth+"px";
+heart.style.fontSize=(Math.random()*20+15)+"px";
+document.body.appendChild(heart);
+setTimeout(()=>{heart.remove();},5000);
+}
+
+setInterval(createHeart,300);
+</script>
+
+</body>
+</html>
